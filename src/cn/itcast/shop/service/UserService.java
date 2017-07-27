@@ -18,4 +18,25 @@ public class UserService {
 		return row > 0 ? true : false;
 	}
 
+	public void active(String activeCode) {
+		UserDao userDao = new UserDao();
+		try {
+			userDao.active(activeCode);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean checkUsername(String username) {
+
+		Long row = null;
+		UserDao userDao = new UserDao();
+		try {
+			row = userDao.checkUsername(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row > 0 ? true : false;
+	}
+
 }

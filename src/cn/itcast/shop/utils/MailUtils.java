@@ -64,7 +64,7 @@ public class MailUtils {
 		Authenticator auth = new Authenticator() {
 			@Override
 			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("nick", "12345");
+				return new PasswordAuthentication("ItcastShop", "12345");
 			}
 		};
 
@@ -74,7 +74,7 @@ public class MailUtils {
 		// 2.创建一个Message，它相当于是邮件内容
 		Message message = new MimeMessage(session);
 
-		message.setFrom(new InternetAddress("nick@itpower.com")); // 设置发送者
+		message.setFrom(new InternetAddress("ItcastShop@itpower.com")); // 设置发送者
 
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); // 设置发送方式与接收者
 
