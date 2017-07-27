@@ -24,8 +24,8 @@ public class CheckUsername extends HttpServlet {
 		UserService userService = new UserService();
 		boolean isExist = userService.checkUsername(username);
 
-		String json = "{\"isExist\":" + "\"" + isExist + "\"}";
-
+		String json = "{\"isExist\":" + isExist + "}";
+		System.out.println(isExist);
 		response.getWriter().write(json);
 	}
 
