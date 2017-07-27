@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.apache.commons.beanutils.Converter;
 import cn.itcast.shop.domain.User;
 import cn.itcast.shop.service.UserService;
 import cn.itcast.shop.utils.CommonUtils;
+import cn.itcast.shop.utils.MailUtils;
 
 public class RegisterServlet extends HttpServlet {
 
@@ -72,17 +74,16 @@ public class RegisterServlet extends HttpServlet {
 		if (isRegistSuccess) {
 
 			// 发送激活邮件
-			// String emailMsg = "恭喜您注册成功，请点击下面的连接进行激活账户"
-			// + "<a href='http://localhost:8080/ItcastShop/active?activeCode="
-			// + activeCode
-			// + "'>" + "http://localhost:8080/ItcastShop/active?activeCode=" +
-			// activeCode
-			// + "</a>";
-			// try {
-			// MailUtils.sendMail(user.getEmail(), "注册激活", emailMsg);
-			// } catch (MessagingException e) {
-			// e.printStackTrace();
-			// }
+			String emailMsg = "恭喜您注册成功，请点击下面的连接进行激活账户"
+					+ "<a href='http://localhost:8080/ItcastShop/active?activeCode="
+					+ activeCode + "'>"
+					+ "http://localhost:8080/ItcastShop/active?activeCode="
+					+ activeCode + "</a>";
+			try {
+				MailUtils.sendMail(user.getEmail(), "注册激活", emailMsg);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 
 			// 跳转到注册成功页面
 			response.sendRedirect(

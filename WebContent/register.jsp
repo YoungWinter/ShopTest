@@ -21,6 +21,12 @@
 
 <!-- 引入自定义css文件 style.css -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<style type="text/css">
+label.valid{
+    background: url('image/valid.png') no-repeat left center;
+}
+</style>
+
 <script type="text/javascript">
 	$(function() {
 
@@ -60,6 +66,11 @@
 			onfocusout : function(element) {
 				$(element).valid();
 			},
+			//成功是显示的信息
+			success: function(label){
+		        /*label的默认正确样式为valid，需要通过validClass来重置，否则这里添加的其他样式不能被清除*/
+		        label.text('').addClass('valid');
+		    },
 			//校验规则
 			rules : {
 				"username" : {
@@ -70,11 +81,11 @@
 					"required" : true,
 					"rangelength" : [ 6, 12 ]
 				},
-				//"repassword":{
-				//	"required":true,
-				//	"rangelength":[6,12],
-				//	"equalTo":"#password"
-				//},
+				"repassword":{
+					"required":true,
+					"rangelength":[6,12],
+					"equalTo":"#confirmpwd"
+				},
 				"email" : {
 					"required" : true,
 					"email" : true
@@ -154,7 +165,7 @@ font {
 						</div>
 						<label for="username" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left; display: none"></label>
+							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
@@ -164,7 +175,7 @@ font {
 						</div>
 						<label for="inputPassword3" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left; display: none"></label>
+							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="confirmpwd" class="col-sm-2 control-label">确认密码</label>
@@ -174,7 +185,7 @@ font {
 						</div>
 						<label for="confirmpwd" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left; display: none"></label>
+							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
@@ -184,7 +195,7 @@ font {
 						</div>
 						<label for="inputEmail3" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left; display: none"></label>
+							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="usercaption" class="col-sm-2 control-label">姓名</label>
