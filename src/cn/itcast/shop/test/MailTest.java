@@ -8,7 +8,7 @@ import cn.itcast.shop.utils.MailUtils;
 
 public class MailTest {
 
-	// 测试sss
+	// 测试sssdddd
 	@Test
 	public void sendMail() {
 		String user = "jack@itpower.com";
