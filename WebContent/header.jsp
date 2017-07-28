@@ -1,6 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
+<script type="text/javascript">
+	$(function(){
+		var content = "";
+		$.post(
+			"${pageContext.request.contextPath }/categoryList",
+			function(data){
+				for(var i=0;i<data.length;i++){
+					content += "<li><a href='${pageContext.request.contextPath }/productListByCategory?cid=" + data[i].cid + "'>" + data[i].cname + "</a></li>";
+				}
+				//将数据放置到页面中
+				$("#categoryUl").html(content);
+			},
+			"json"
+		);
+	});
+</script>
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
 	<div class="col-md-4">
@@ -31,15 +48,13 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">首页</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath }/index">首页</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="product_list.htm">手机数码<span class="sr-only">(current)</span></a></li>
-					<li><a href="#">电脑办公</a></li>
-					<li><a href="#">电脑办公</a></li>
-					<li><a href="#">电脑办公</a></li>
+				<ul class="nav navbar-nav" id="categoryUl">
+				<%-- class="active" --%>
+					<!--  <li><a href="#">手机数码<span class="sr-only">(current)</span></a></li> -->
 				</ul>
 				<form class="navbar-form navbar-right" role="search">
 					<div class="form-group">

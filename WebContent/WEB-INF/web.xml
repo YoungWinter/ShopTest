@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>ItcastShop</display-name>
+  <welcome-file-list>
+  	<welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
   
   <!-- 用户模块:用户注册 -->
   <servlet>
@@ -22,11 +25,11 @@
   </servlet-mapping>
   <!-- 用户模块:校验用户名 -->
   <servlet>
-  	<servlet-name>CheckUsername</servlet-name>
-  	<servlet-class>cn.itcast.shop.web.servlet.CheckUsername</servlet-class>
+  	<servlet-name>CheckUsernameServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.CheckUsernameServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>CheckUsername</servlet-name>
+  	<servlet-name>CheckUsernameServlet</servlet-name>
   	<url-pattern>/checkUsername</url-pattern>
   </servlet-mapping>
   <!-- 用户模块:生成图片验证码 -->
@@ -40,12 +43,40 @@
   </servlet-mapping>
   <!-- 用户模块:校验图片验证码 -->
   <servlet>
-  	<servlet-name>CheckImgValidate</servlet-name>
-  	<servlet-class>cn.itcast.shop.web.servlet.CheckImgValidate</servlet-class>
+  	<servlet-name>CheckImgValidateServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.CheckImgValidateServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>CheckImgValidate</servlet-name>
+  	<servlet-name>CheckImgValidateServlet</servlet-name>
   	<url-pattern>/checkImgValidate</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 商品模块:首页展示 -->
+  <servlet>
+  	<servlet-name>IndexServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.IndexServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>IndexServlet</servlet-name>
+  	<url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  <!-- 商品模块:种类列表 -->
+  <servlet>
+  	<servlet-name>CategoryListServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.CategoryListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CategoryListServlet</servlet-name>
+  	<url-pattern>/categoryList</url-pattern>
+  </servlet-mapping>
+  <!-- 商品模块:通过商品种类展示商品列表 -->
+  <servlet>
+  	<servlet-name>ProductListByCategoryServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.ProductListByCategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ProductListByCategoryServlet</servlet-name>
+  	<url-pattern>/productListByCategory</url-pattern>
   </servlet-mapping>
   
   <!-- 编码过滤器 -->
@@ -55,6 +86,9 @@
   </filter>
   <filter-mapping>
   	<filter-name>EncodingFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+  	<!-- <url-pattern>*.action</url-pattern> -->
+  	<servlet-name>RegisterServlet</servlet-name>
+  	<servlet-name>CheckUsernameServlet</servlet-name>
+  	<servlet-name>CheckImgValidateServlet</servlet-name>
   </filter-mapping>
 </web-app>

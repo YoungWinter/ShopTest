@@ -3,12 +3,11 @@ package cn.itcast.shop.utils;
 import java.io.IOException;
 import java.util.Properties;
 
-import cn.itcast.shop.test.RedisTest;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-public class RedisUtils {
+public class JedisPoolUtils {
 
 	private static JedisPool pool = null;
 
@@ -16,7 +15,8 @@ public class RedisUtils {
 		// 获取配置文件信息
 		Properties properties = new Properties();
 		try {
-			properties.load(RedisTest.class.getResourceAsStream("/redis.properties"));
+			properties.load(
+					JedisPoolUtils.class.getClassLoader().getResourceAsStream("redis.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

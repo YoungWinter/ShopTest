@@ -5,7 +5,7 @@ import java.util.Properties;
 
 import org.junit.Test;
 
-import cn.itcast.shop.utils.RedisUtils;
+import cn.itcast.shop.utils.JedisPoolUtils;
 import redis.clients.jedis.Jedis;
 
 public class RedisTest {
@@ -48,7 +48,7 @@ public class RedisTest {
 
 	@Test
 	public void test2() {
-		Jedis jedis = RedisUtils.getJedis();
+		Jedis jedis = JedisPoolUtils.getJedis();
 		System.out.println(jedis.get("username"));
 	}
 }
