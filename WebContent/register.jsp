@@ -22,12 +22,18 @@
 <!-- 引入自定义css文件 style.css -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <style type="text/css">
-label.valid{
-    background: url('image/valid.png') no-repeat left center;
+label.valid {
+	background: url('image/valid.png') no-repeat left center;
 }
 </style>
 
 <script type="text/javascript">
+	//改变验证码图片
+	function changeImg(obj) {
+		obj.src = "${pageContext.request.contextPath }/checkImg?time="
+				+ new Date().getTime();
+	}
+
 	$(function() {
 
 		//日期控件
@@ -40,37 +46,57 @@ label.valid{
 			pickerPosition : "bottom-left"
 		});
 
-		//自定义校验规则
-		$.validator
-				.addMethod(
+		//自定义校验规则(用户名是否为空)
+		$.validator.addMethod(
 						"checkUsername",
 						function(value, element, params) {
 							//value--输入的内容,element--被校验的元素对象,params--规则对应的参数
 							var isExist = false;
 							$.ajax({
-								"async" : false,
-								"url" : "${pageContext.request.contextPath}/checkUsername",
-								"data" : {"username" : value},
-								"type" : "POST",
-								"dataType" : "json",
-								"success" : function(data) {
-									isExist = data.isExist;
-								}
-							});
+										"async" : false,
+										"url" : "${pageContext.request.contextPath}/checkUsername",
+										"data" : {
+											"username" : value
+										},
+										"type" : "POST",
+										"dataType" : "json",
+										"success" : function(data) {
+											isExist = data.isExist;
+										}
+									});
 							return !isExist;
 						});
+		
+		//自定义校验规则(验证码是否正确)
+		$.validator.addMethod(
+			"checkCodeValidate",
+			function(value, element, params){
+				var isTrue = false;
+				$.ajax({
+					"async" : false,
+					"url" : "${pageContext.request.contextPath}/checkImgValidate",
+					"data" : {
+						"checkCode" : value
+					},
+					"type" : "POST",
+					"dataType" : "json",
+					"success" : function(data) {
+						isTrue = data.isExist;
+					}
+				});
+				return isTrue;
+			}
+		);
 
 		//表单校验
 		$("#formCheck").validate({
 			//失去焦点时验证
-			onfocusout : function(element) {
-				$(element).valid();
-			},
+			onfocusout : function(element) {$(element).valid();},
 			//成功是显示的信息
-			success: function(label){
-		        /*label的默认正确样式为valid，需要通过validClass来重置，否则这里添加的其他样式不能被清除*/
-		        label.text('').addClass('valid');
-		    },
+			success : function(label) {
+				/*label的默认正确样式为valid，需要通过validClass来重置，否则这里添加的其他样式不能被清除*/
+				label.text('').addClass('valid');
+			},
 			//校验规则
 			rules : {
 				"username" : {
@@ -81,10 +107,10 @@ label.valid{
 					"required" : true,
 					"rangelength" : [ 6, 12 ]
 				},
-				"repassword":{
-					"required":true,
-					"rangelength":[6,12],
-					"equalTo":"#confirmpwd"
+				"repassword" : {
+					"required" : true,
+					"rangelength" : [ 6, 12 ],
+					"equalTo" : "#confirmpwd"
 				},
 				"email" : {
 					"required" : true,
@@ -92,6 +118,9 @@ label.valid{
 				},
 				"sex" : {
 					"required" : true
+				},
+				"checkCode":{
+					"checkCodeValidate" : true
 				}
 			},
 			messages : {
@@ -114,6 +143,9 @@ label.valid{
 				},
 				"sex" : {
 					"required" : "性别不能为空"
+				},
+				"checkCode":{
+					"checkCodeValidate" : "验证码不正确"
 				}
 			}
 		});
@@ -165,7 +197,7 @@ font {
 						</div>
 						<label for="username" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
+							style="text-align: left; height: 30px; padding-top: 0px; width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
@@ -175,7 +207,7 @@ font {
 						</div>
 						<label for="inputPassword3" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
+							style="text-align: left; height: 30px; padding-top: 0px; width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="confirmpwd" class="col-sm-2 control-label">确认密码</label>
@@ -185,7 +217,7 @@ font {
 						</div>
 						<label for="confirmpwd" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
+							style="text-align: left; height: 30px; padding-top: 0px; width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
@@ -195,7 +227,7 @@ font {
 						</div>
 						<label for="inputEmail3" generated="true"
 							class="col-sm-2 control-label error"
-							style="text-align: left;height: 30px;padding-top: 0px;width: 120px;"></label>
+							style="text-align: left; height: 30px; padding-top: 0px; width: 120px;"></label>
 					</div>
 					<div class="form-group">
 						<label for="usercaption" class="col-sm-2 control-label">姓名</label>
@@ -230,12 +262,15 @@ font {
 					<div class="form-group">
 						<label for="date" class="col-sm-2 control-label">验证码</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control">
-
+							<input type="text" class="form-control" name="checkCode">
 						</div>
 						<div class="col-sm-2">
-							<img src="./image/captcha.jhtml" />
+							<img src="${pageContext.request.contextPath }/checkImg"
+								onclick="changeImg(this)" />
 						</div>
+						<label for="checkCode" generated="true"
+							class="col-sm-2 control-label error"
+							style="text-align: left; height: 30px; padding-top: 0px; width: 120px;"></label>
 
 					</div>
 

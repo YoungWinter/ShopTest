@@ -29,6 +29,24 @@
   	<servlet-name>CheckUsername</servlet-name>
   	<url-pattern>/checkUsername</url-pattern>
   </servlet-mapping>
+  <!-- 用户模块:生成图片验证码 -->
+  <servlet>
+  	<servlet-name>CheckImgServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.CheckImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CheckImgServlet</servlet-name>
+  	<url-pattern>/checkImg</url-pattern>
+  </servlet-mapping>
+  <!-- 用户模块:校验图片验证码 -->
+  <servlet>
+  	<servlet-name>CheckImgValidate</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.CheckImgValidate</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CheckImgValidate</servlet-name>
+  	<url-pattern>/checkImgValidate</url-pattern>
+  </servlet-mapping>
   
   <!-- 编码过滤器 -->
   <filter>
