@@ -41,11 +41,11 @@ body {
 		</div>
 		<c:forEach items="${pageBean.list }" var="product">
 			<div class="col-md-2" style="height: 250px">
-				<a href="product_info.htm"> <img src="${pageContext.request.contextPath }/${product.pimage }"
+				<a href="${pageContext.request.contextPath }/productInfo?pid=${product.pid }&currentPage=${pageBean.currentPage }"> <img src="${pageContext.request.contextPath }/${product.pimage }"
 					width="170" height="170" style="display: inline-block;">
 				</a>
 				<p>
-					<a href="product_info.html" style='color: green'>${product.pname }</a>
+					<a href="${pageContext.request.contextPath }/productInfo?pid=${product.pid }&currentPage=${pageBean.currentPage }" style='color: green'>${product.pname }</a>
 				</p>
 				<p>
 					<font color="#FF0000">商城价：&yen;${product.shop_price }</font>
@@ -97,11 +97,14 @@ body {
 		<div style="overflow: hidden;">
 
 			<ul style="list-style: none;">
-				<li
-					style="width: 150px; height: 216; float: left; margin: 0 8px 0 0; padding: 0 18px 15px; text-align: center;"><img
-					src="products/1/cs10001.jpg" width="130px" height="130px" /></li>
+				<c:forEach items="${historyList }" var="historyPro">
+					<li style="width: 150px; height: 216; float: left; margin: 0 8px 0 0; padding: 0 18px 15px; text-align: center;">
+						<a href="${pageContext.request.contextPath }/productInfo?pid=${historyPro.pid }&currentPage=${pageBean.currentPage }">
+							<img src="${pageContext.request.contextPath}/${historyPro.pimage }" width="130px" height="130px" />
+						</a>
+					</li>
+				</c:forEach>
 			</ul>
-
 		</div>
 	</div>
 

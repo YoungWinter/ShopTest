@@ -33,7 +33,8 @@ public class ProductService {
 		return hotProductList;
 	}
 
-	public PageBean<Product> findProductByCid(String cid, int currentPage, int currentCount) {
+	public PageBean<Product> findProductByCid(String cid, int currentPage,
+			int currentCount) {
 		ProductDao productDao = new ProductDao();
 		// 封装一个PageBean
 		PageBean<Product> pageBean = new PageBean<Product>();
@@ -64,6 +65,17 @@ public class ProductService {
 		pageBean.setList(list);
 
 		return pageBean;
+	}
+
+	public Product findProductByPid(String pid) {
+		Product product = null;
+		ProductDao productDao = new ProductDao();
+		try {
+			product = productDao.findProductByPid(pid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return product;
 	}
 
 }

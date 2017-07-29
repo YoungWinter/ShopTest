@@ -1,8 +1,11 @@
 package cn.itcast.shop.web.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +26,7 @@ public class ProductListByCategoryServlet extends HttpServlet {
 		String cid = request.getParameter("cid");
 		String currentPageStr = request.getParameter("currentPage");
 
-		if (currentPageStr == null) {
+		if (currentPageStr == null || "".equals(currentPageStr)) {
 			currentPageStr = "1";
 		}
 		int currentPage = Integer.parseInt(currentPageStr);
@@ -31,13 +34,28 @@ public class ProductListByCategoryServlet extends HttpServlet {
 
 		// 根据商品种类ID查询商品列表
 		ProductService productService = new ProductService();
-		PageBean<Product> pageBean = productService.findProductByCid(cid, currentPage,
-				currentCount);
+		PageBean<Product> pageBean = productService.findProductByCid(cid,
+				currentPage, currentCount);
+
+		// 设置历史记录
+		List<Product> historyList = new ArrayList<Product>();
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			if ("pids".equals(cookie.getName())) {
+				String[] pids = cookie.getValue().split("-");
+				for (String pid : pids) {
+					Product product = productService.findProductByPid(pid);
+					historyList.add(product);
+				}
+			}
+		}
 
 		// 页面跳转
 		request.setAttribute("pageBean", pageBean);
+		request.setAttribute("historyList", historyList);
 		request.setAttribute("cid", cid);
-		request.getRequestDispatcher("/product_list.jsp").forward(request, response);
+		request.getRequestDispatcher("/product_list.jsp").forward(request,
+				response);
 	}
 
 	@Override

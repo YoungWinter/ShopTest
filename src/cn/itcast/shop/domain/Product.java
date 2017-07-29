@@ -5,7 +5,7 @@ import java.util.Date;
 public class Product {
 	private String pid;
 	private String pname;
-	private Double mark_price;
+	private Double market_price;
 	private Double shop_price;
 	private String pimage;
 	private Date pdate;
@@ -30,12 +30,12 @@ public class Product {
 		this.pname = pname;
 	}
 
-	public Double getMark_price() {
-		return mark_price;
+	public Double getMarket_price() {
+		return market_price;
 	}
 
-	public void setMark_price(Double mark_price) {
-		this.mark_price = mark_price;
+	public void setMarket_price(Double market_price) {
+		this.market_price = market_price;
 	}
 
 	public Double getShop_price() {
@@ -96,7 +96,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [pid=" + pid + ", pname=" + pname + ", category=" + category + "]";
+		return "Product [pid=" + pid + ", pname=" + pname + ", category="
+				+ category + "]";
 	}
 
 }
