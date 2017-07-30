@@ -39,4 +39,15 @@ public class UserService {
 		return row > 0 ? true : false;
 	}
 
+	public User login(User user) {
+		User loginUser = null;
+		UserDao userDao = new UserDao();
+		try {
+			loginUser = userDao.login(user);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return loginUser;
+	}
+
 }

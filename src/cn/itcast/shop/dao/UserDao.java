@@ -3,6 +3,7 @@ package cn.itcast.shop.dao;
 import java.sql.SQLException;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import cn.itcast.shop.domain.User;
@@ -13,9 +14,10 @@ public class UserDao {
 	public int regist(User user) throws SQLException {
 		QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = "insert into user values(?,?,?,?,?,?,?,?,?,?)";
-		int update = runner.update(sql, user.getUid(), user.getUsername(), user.getPassword(),
-				user.getName(), user.getEmail(), user.getTelephone(), user.getBirthday(),
-				user.getSex(), user.getState(), user.getCode());
+		int update = runner.update(sql, user.getUid(), user.getUsername(),
+				user.getPassword(), user.getName(), user.getEmail(),
+				user.getTelephone(), user.getBirthday(), user.getSex(),
+				user.getState(), user.getCode());
 		return update;
 	}
 
@@ -31,6 +33,15 @@ public class UserDao {
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql = "select count(*) from user where username=?";
 		return (Long) qr.query(sql, new ScalarHandler(), username);
+	}
+
+	public User login(User user) throws SQLException {
+		User loginUser = null;
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from user where username=? and password=?";
+		loginUser = qr.query(sql, new BeanHandler<User>(User.class),
+				user.getUsername(), user.getPassword());
+		return loginUser;
 	}
 
 }

@@ -85,4 +85,20 @@ public class ProductDao {
 		return product;
 	}
 
+	public List<Product> findProductListByWord(String keyWord)
+			throws SQLException {
+		List<Product> productList = null;
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from product where pname like ? limit 0,8";
+		productList = qr.query(sql, new BeanListHandler<Product>(Product.class),
+				"%" + keyWord + "%");
+		for (Product product : productList) {
+			sql = "select category.cid,cname from category left outer join product on category.cid = product.cid where product.pid=?";
+			product.setCategory(
+					qr.query(sql, new BeanHandler<Category>(Category.class),
+							product.getPid()));
+		}
+		return productList;
+	}
+
 }

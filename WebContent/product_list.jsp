@@ -36,16 +36,16 @@ body {
 	<div class="row" style="width: 1210px; margin: 0 auto;">
 		<div class="col-md-12">
 			<ol class="breadcrumb">
-				<li><a href="#">首页</a></li>
+				<li><a href="${pageContext.request.contextPath}/product?method=productListByCategory&cid=${cid}&currentPage=1">首页</a></li>
 			</ol>
 		</div>
 		<c:forEach items="${pageBean.list }" var="product">
 			<div class="col-md-2" style="height: 250px">
-				<a href="${pageContext.request.contextPath }/productInfo?pid=${product.pid }&currentPage=${pageBean.currentPage }"> <img src="${pageContext.request.contextPath }/${product.pimage }"
+				<a href="${pageContext.request.contextPath }/product?method=productInfo&pid=${product.pid }&currentPage=${pageBean.currentPage }"> <img src="${pageContext.request.contextPath }/${product.pimage }"
 					width="170" height="170" style="display: inline-block;">
 				</a>
 				<p>
-					<a href="${pageContext.request.contextPath }/productInfo?pid=${product.pid }&currentPage=${pageBean.currentPage }" style='color: green'>${product.pname }</a>
+					<a href="${pageContext.request.contextPath }/product?method=productInfo&pid=${product.pid }&currentPage=${pageBean.currentPage }" style='color: green'>${product.pname }</a>
 				</p>
 				<p>
 					<font color="#FF0000">商城价：&yen;${product.shop_price }</font>
@@ -62,7 +62,7 @@ body {
 				<li class="disabled"><a href="javascript:void(0);" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 			</c:if>
 			<c:if test="${pageBean.currentPage != 1 }">
-				<li><a href="${pageContext.request.contextPath}/productListByCategory?cid=${cid}&currentPage=${pageBean.currentPage-1 }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				<li><a href="${pageContext.request.contextPath}/product?method=productListByCategory&cid=${cid}&currentPage=${pageBean.currentPage-1 }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 			</c:if>
 			<!-- 第几页 -->
 			<c:forEach begin="1" end="${pageBean.totalPage }" var="page">
@@ -70,7 +70,7 @@ body {
 					<li class="active"><a href="javascript:void(0);">${page }</a></li>
 				</c:if>
 				<c:if test="${page != pageBean.currentPage }">
-					<li><a href="${pageContext.request.contextPath}/productListByCategory?cid=${cid}&currentPage=${page }">${page }</a></li>
+					<li><a href="${pageContext.request.contextPath}/product?method=productListByCategory&cid=${cid}&currentPage=${page }">${page }</a></li>
 				</c:if>
 			</c:forEach>
 			<!-- 下一页 -->
@@ -78,7 +78,7 @@ body {
 				<li class="disabled"><a href="javascript:void(0);" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 			</c:if>
 			<c:if test="${pageBean.currentPage != pageBean.totalPage }">
-				<li><a href="${pageContext.request.contextPath}/productListByCategory?cid=${cid}&currentPage=${pageBean.currentPage+1 }" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+				<li><a href="${pageContext.request.contextPath}/product?method=productListByCategory&cid=${cid}&currentPage=${pageBean.currentPage+1 }" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 			</c:if>
 		</ul>
 	</div>
@@ -99,8 +99,11 @@ body {
 			<ul style="list-style: none;">
 				<c:forEach items="${historyList }" var="historyPro">
 					<li style="width: 150px; height: 216; float: left; margin: 0 8px 0 0; padding: 0 18px 15px; text-align: center;">
-						<a href="${pageContext.request.contextPath }/productInfo?pid=${historyPro.pid }&currentPage=${pageBean.currentPage }">
+						<a href="${pageContext.request.contextPath }/product?method=productInfo&pid=${historyPro.pid }&currentPage=${pageBean.currentPage }">
 							<img src="${pageContext.request.contextPath}/${historyPro.pimage }" width="130px" height="130px" />
+						</a>
+						<a href="${pageContext.request.contextPath }/product?method=productInfo&pid=${historyPro.pid }&currentPage=${pageBean.currentPage }">
+							<span style="font-size: 12px">${historyPro.pname }</span>
 						</a>
 					</li>
 				</c:forEach>

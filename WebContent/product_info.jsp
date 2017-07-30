@@ -23,6 +23,16 @@ body {
 	height: 300px;
 }
 </style>
+<script type="text/javascript">
+	function addToCart(){
+		var buyNum = $("#buyNum").val();
+		if(buyNum > 0 && buyNum < 1000){
+			location.href = "${pageContext.request.contextPath }/cart?method=addProductToCart&pid=${product.pid }&buyNum=" + buyNum;
+		}else{
+			$("#buyNumError").html("必须是[1-999]之间的数字!");
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -33,7 +43,7 @@ body {
 		<div class="row">
 			<div
 				style="border: 1px solid #e4e4e4; width: 930px; margin-bottom: 10px; margin: 0 auto; padding: 10px; margin-bottom: 10px;">
-				<a href="${pageContext.request.contextPath }/index">首页&nbsp;&nbsp;&gt;</a> <a href="${pageContext.request.contextPath }/productListByCategory?cid=${product.category.cid }&currentPage=${currentPage }">${product.category.cname }&nbsp;&nbsp;&gt;</a>
+				<a href="${pageContext.request.contextPath }/product?method=index">首页&nbsp;&nbsp;&gt;</a> <a href="${pageContext.request.contextPath }/product?method=productListByCategory&cid=${product.category.cid }&currentPage=${currentPage }">${product.category.cname }&nbsp;&nbsp;&gt;</a>
 				
 			</div>
 
@@ -67,15 +77,12 @@ body {
 						style="padding: 10px; border: 1px solid #e7dbb1; width: 330px; margin: 15px 0 10px 0;; background-color: #fffee6;">
 						<div style="margin: 5px 0 10px 0;">白色</div>
 
-						<div
-							style="border-bottom: 1px solid #faeac7; margin-top: 20px; padding-left: 10px;">
-							购买数量: <input id="quantity" name="quantity" value="1"
-								maxlength="4" size="10" type="text">
+						<div style="border-bottom: 1px solid #faeac7; margin-top: 20px; padding-left: 10px;">
+							购买数量: <input id="buyNum" name="buyNum" value="1" min="1" max="9999" size="10" type="number" style="width: 70px;"><span id="buyNumError" style="color: red;font-size: 13px"></span>
 						</div>
 
-						<div style="margin: 20px 0 10px 0;; text-align: center;">
-							<a href="cart.htm"> <input
-								style="background: url('./images/product.gif') no-repeat scroll 0 -600px rgba(0, 0, 0, 0); height: 36px; width: 127px;"
+						<div style="margin: 20px 0 10px 0; text-align: center;">
+							<a href="javascript:void(0);" onclick="addToCart()"> <input style="background: url('./images/product.gif') no-repeat scroll 0 -600px rgba(0, 0, 0, 0); height: 36px; width: 127px;"
 								value="加入购物车" type="button">
 							</a> &nbsp;收藏商品
 						</div>

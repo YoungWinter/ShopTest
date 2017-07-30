@@ -34,7 +34,43 @@ font {
 	font-weight: normal;
 	padding-right: 17px;
 }
+.valid {
+		background: url('image/valid.png') no-repeat left center;
+	}
 </style>
+<script type="text/javascript">
+
+	//改变验证码图片
+	function changeImg(obj) {
+		obj.src = "${pageContext.request.contextPath }/checkImg?time="
+				+ new Date().getTime();
+	}
+	
+	//校验验证码
+	function checkImage(){
+		var value = $("#checkedImage").val();
+		$.ajax({
+			"async" : false,
+			"url" : "${pageContext.request.contextPath}/checkImgValidate",
+			"data" : {
+				"checkCode" : value
+			},
+			"type" : "POST",
+			"dataType" : "json",
+			"success" : function(data) {
+				if(data.isExist){
+					$("#validLbel").html("");
+					$("#validLbel").html("<img src='${pageContext.request.contextPath }/image/valid.png'>");
+					$("#loginForm").removeAttr("disabled");
+				}else{
+					$("#validLbel").html("");
+					$("#validLbel").html("验证码错误");
+					$("#loginForm").attr("disabled","true");
+				}
+			}
+		});		
+	}
+</script>
 </head>
 <body>
 
@@ -53,45 +89,49 @@ font {
 				<div
 					style="width: 440px; border: 1px solid #E7E7E7; padding: 20px 0 20px 30px; border-radius: 5px; margin-top: 60px; background: #fff;">
 					<font>会员登录</font>USER LOGIN
-					<div>&nbsp;</div>
-					<form class="form-horizontal">
+					<div><span style="color: red">${loginInfo }</span></div>
+					<form  class="form-horizontal" action="${pageContext.request.contextPath }/user" method="post">
+						<input type="hidden" name="method" value="login">
 						<div class="form-group">
 							<label for="username" class="col-sm-2 control-label">用户名</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="username"
+								<input type="text" class="form-control" id="username" name="username"
 									placeholder="请输入用户名">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" id="inputPassword3"
+								<input type="password" class="form-control" id="inputPassword3" name="password"
 									placeholder="请输入密码">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword3" class="col-sm-2 control-label">验证码</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control" id="inputPassword3"
-									placeholder="请输入验证码">
+								<input type="text" class="form-control" id="checkedImage" onblur="checkImage()"
+									style="padding-left: 2px; padding-right: 2px;" placeholder="请输入验证码">
 							</div>
-							<div class="col-sm-3">
-								<img src="./image/captcha.jhtml" />
+							<div class="col-sm-4" style="padding-left: 0px; padding-right: 0px;">
+								<img src="${pageContext.request.contextPath }/checkImg" onclick="changeImg(this)" />
+							</div>
+							<div class="col-sm-2" style="padding-left: 0px; padding-right: 0px;">
+								<label id="validLbel"></label>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
 								<div class="checkbox">
-									<label> <input type="checkbox"> 自动登录
+									<label> <input type="checkbox" name="autoLogin"> 自动登录
 									</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label> <input
-										type="checkbox"> 记住用户名
+										type="checkbox" name="isRember"> 记住用户名
 									</label>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<input type="submit" width="100" value="登录" name="submit"
+								<input id="loginForm" type="submit" width="100" value="登录" name="submit"
 									style="background: url('./images/login.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0); height: 35px; width: 100px; color: white;">
 							</div>
 						</div>

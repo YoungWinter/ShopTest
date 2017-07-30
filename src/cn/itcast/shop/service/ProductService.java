@@ -78,4 +78,15 @@ public class ProductService {
 		return product;
 	}
 
+	public List<Product> findProductListByWord(String keyWord) {
+		List<Product> productList = null;
+		ProductDao productDao = new ProductDao();
+		try {
+			productList = productDao.findProductListByWord(keyWord);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return productList;
+	}
+
 }

@@ -22,9 +22,9 @@
 <!-- 引入自定义css文件 style.css -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <style type="text/css">
-label.valid {
-	background: url('image/valid.png') no-repeat left center;
-}
+	label.valid {
+		background: url('image/valid.png') no-repeat left center;
+	}
 </style>
 
 <script type="text/javascript">
