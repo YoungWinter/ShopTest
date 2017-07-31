@@ -26,8 +26,8 @@ public class ProductServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	// 搜索商品
-	public String searchProductListByWord(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String searchProductListByWord(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// 获取关键字
 		String keyWord = request.getParameter("word");
 		// 根据关键字查询符合条件的商品集合
@@ -43,8 +43,8 @@ public class ProductServlet extends BaseServlet {
 	}
 
 	// 商品种类列表
-	public String categoryList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String categoryList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		CategoryService categoryService = new CategoryService();
 		List<Category> categoryList = null;
@@ -65,8 +65,8 @@ public class ProductServlet extends BaseServlet {
 	}
 
 	// 商品首页展示列表
-	public String index(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String index(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// 查询分类
 		CategoryService categoryService = new CategoryService();
 		List<Category> categoryList = categoryService.findAllCategory();
@@ -86,8 +86,8 @@ public class ProductServlet extends BaseServlet {
 	}
 
 	// 商品详情
-	public String productInfo(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String productInfo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// 获取商品的pid
 		String pid = request.getParameter("pid");
 		String currentPage = request.getParameter("currentPage");
@@ -104,7 +104,7 @@ public class ProductServlet extends BaseServlet {
 				if ("pids".equals(cookie.getName())) {
 					pids = cookie.getValue();
 					LinkedList<String> pidsList = new LinkedList<String>(
-							Arrays.asList(pids.split("-")));
+							Arrays.asList(pids.split(":")));
 					if (pidsList.contains(pid)) {
 						pidsList.remove(pid);
 					}
@@ -113,7 +113,7 @@ public class ProductServlet extends BaseServlet {
 					for (int i = 0; i < pidsList.size() && i < 7; i++) {
 
 						pids += pidsList.get(i);
-						pids += "-";
+						pids += ":";
 					}
 					pids = pids.substring(0, pids.length() - 1);
 				}
@@ -131,8 +131,8 @@ public class ProductServlet extends BaseServlet {
 	}
 
 	// 商品列表
-	public String productListByCategory(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String productListByCategory(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// 获取商品种类的ID
 		String cid = request.getParameter("cid");
 		String currentPageStr = request.getParameter("currentPage");
@@ -145,18 +145,20 @@ public class ProductServlet extends BaseServlet {
 
 		// 根据商品种类ID查询商品列表
 		ProductService productService = new ProductService();
-		PageBean<Product> pageBean = productService.findProductByCid(cid,
-				currentPage, currentCount);
+		PageBean<Product> pageBean = productService.findProductByCid(cid, currentPage,
+				currentCount);
 
 		// 设置历史记录
 		List<Product> historyList = new ArrayList<Product>();
 		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if ("pids".equals(cookie.getName())) {
-				String[] pids = cookie.getValue().split("-");
-				for (String pid : pids) {
-					Product product = productService.findProductByPid(pid);
-					historyList.add(product);
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("pids".equals(cookie.getName())) {
+					String[] pids = cookie.getValue().split(":");
+					for (String pid : pids) {
+						Product product = productService.findProductByPid(pid);
+						historyList.add(product);
+					}
 				}
 			}
 		}

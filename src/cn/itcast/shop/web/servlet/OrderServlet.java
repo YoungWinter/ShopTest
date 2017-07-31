@@ -24,19 +24,59 @@ public class OrderServlet extends BaseServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	// 订单展示
+	public String orderList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// 获取当前用户
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		// 准备数据(查询该用户下的所有订单)
+		OrderService orderService = new OrderService();
+		List<Order> orderList = orderService.findOrderListByUser(user);
+
+		// 将数据放入request域中
+		request.setAttribute("orderList", orderList);
+		// 页面转发
+
+		return "/order_list.jsp";
+	}
+
+	// 订单处理
+	public String dealOrder(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 获取表单数据
+		String oid = request.getParameter("oid");
+		String address = request.getParameter("address");
+		String name = request.getParameter("name");
+		String telephone = request.getParameter("telephone");
+
+		// 根据oid查询订单对象并封装数据
+		OrderService orderService = new OrderService();
+		Order order = orderService.findOrderByOid(oid);
+		if (order != null) {
+			order.setAddress(address);
+			order.setName(name);
+			order.setTelephone(telephone);
+			order.setState(1);
+		}
+
+		orderService.updateOrder(order);
+
+		// 页面跳转
+		response.sendRedirect(request.getContextPath() + "/order?method=orderList");
+
+		return null;
+	}
+
 	// 保存订单
-	public String saveOrder(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String saveOrder(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// 判断用户是否登录
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			// 没有登录
-			session.setAttribute("cartPage", "cartPage");
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
-			return null;
-		}
 
 		// 获取Cart对象
 		Cart cart = (Cart) session.getAttribute("cart");
@@ -71,6 +111,26 @@ public class OrderServlet extends BaseServlet {
 		orderService.saveOrder(order);
 
 		// 将Order对象存到Session中
+		session.setAttribute("order", order);
+
+		response.sendRedirect(request.getContextPath() + "/order_info.jsp");
+
+		return null;
+	}
+
+	// 保存订单
+	public String payOrder(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// 获取oid
+		String oid = request.getParameter("oid");
+
+		// 根据oid查询订单
+		OrderService orderService = new OrderService();
+		Order order = orderService.findPayingOrderByOid(oid);
+
+		// 将Order对象存到Session中
+		HttpSession session = request.getSession();
 		session.setAttribute("order", order);
 
 		response.sendRedirect(request.getContextPath() + "/order_info.jsp");

@@ -52,4 +52,10 @@ public class OrderItem {
 		this.order = order;
 	}
 
+	@Override
+	public String toString() {
+		return "OrderItem [itemid=" + itemid + ", count=" + count + ", subtotal=" + subtotal
+				+ ", product=" + product + "]";
+	}
+
 }

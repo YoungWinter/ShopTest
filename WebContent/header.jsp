@@ -72,10 +72,10 @@
 			</c:if>
 			<c:if test="${!empty user }">
 				<li style="font-size: 15px;color: orange;">亲爱的<strong>${user.username }</strong>,您好</li>
-				<li><a href="register.jsp">退出</a></li>
+				<li><a href="${pageContext.request.contextPath }/user?method=logout">退出</a></li>
 			</c:if>
 			<li><a href="${pageContext.request.contextPath }/cart.jsp">购物车</a></li>
-			<li><a href="order_list.jsp">我的订单</a></li>
+			<li><a href="${pageContext.request.contextPath }/order?method=orderList">我的订单</a></li>
 		</ol>
 	</div>
 </div>

@@ -54,9 +54,10 @@
 							var isExist = false;
 							$.ajax({
 										"async" : false,
-										"url" : "${pageContext.request.contextPath}/checkUsername",
+										"url" : "${pageContext.request.contextPath}/user",
 										"data" : {
-											"username" : value
+											"username" : value,
+											"method" : "checkUsername"
 										},
 										"type" : "POST",
 										"dataType" : "json",
@@ -74,9 +75,10 @@
 				var isTrue = false;
 				$.ajax({
 					"async" : false,
-					"url" : "${pageContext.request.contextPath}/checkImgValidate",
+					"url" : "${pageContext.request.contextPath}/user",
 					"data" : {
-						"checkCode" : value
+						"checkCode" : value,
+						"method" : "checkImgValidate"
 					},
 					"type" : "POST",
 					"dataType" : "json",
@@ -188,7 +190,8 @@ font {
 				<font>会员注册</font>USER REGISTER
 				<form id="formCheck" class="form-horizontal"
 					style="margin-top: 5px;"
-					action="${pageContext.request.contextPath }/register" method="post">
+					action="${pageContext.request.contextPath }/user" method="post">
+					<input type="hidden" name="method" value="register"/>
 					<div class="form-group">
 						<label for="username" class="col-sm-2 control-label">用户名</label>
 						<div class="col-sm-4">

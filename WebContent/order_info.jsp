@@ -25,6 +25,11 @@ body {
 			text-align: center;
 	}
 </style>
+<script type="text/javascript">
+	function dealOrder(){
+		$("#orderForm").submit();
+	}
+</script>
 </head>
 
 <body>
@@ -70,30 +75,32 @@ body {
 
 		<div>
 			<hr />
-			<form class="form-horizontal"
+			<form class="form-horizontal" id="orderForm" action="${pageContext.request.contextPath }/order" method="post"
 				style="margin-top: 5px; margin-left: 150px;">
+				<input type="hidden" name="method" value="dealOrder"/>
+				<input type="hidden" name="oid" value="${order.oid }"/>
 				<div class="form-group">
 					<label for="username" class="col-sm-1 control-label">地址</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="username"
-							placeholder="请输入收货地址">
+						<input type="text" class="form-control" id="address" name="address"
+							placeholder="请输入收货地址" value="${order.address }">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="inputPassword3" class="col-sm-1 control-label">收货人</label>
 					<div class="col-sm-5">
-						<input type="password" class="form-control" id="inputPassword3"
-							placeholder="请输收货人">
+						<input type="text" class="form-control" id="inputPassword3" name="name"
+							placeholder="请输收货人" value="${order.name }">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="confirmpwd" class="col-sm-1 control-label">电话</label>
 					<div class="col-sm-5">
-						<input type="password" class="form-control" id="confirmpwd"
-							placeholder="请输入联系方式">
+						<input type="text" class="form-control" id="confirmpwd" name="telephone"
+							placeholder="请输入联系方式" value="${order.telephone }">
 					</div>
 				</div>
-			</form>
+			
 
 			<hr />
 
@@ -121,7 +128,7 @@ body {
 				</p>
 				<hr />
 				<p style="text-align: right; margin-right: 100px;">
-					<a href="javascript:document.getElementById('orderForm').submit();">
+					<a href="javascript:;" onclick="dealOrder()">
 						<img src="./images/finalbutton.gif" width="204" height="51"
 						border="0" />
 					</a>
@@ -129,6 +136,7 @@ body {
 				<hr />
 
 			</div>
+		</form>
 		</div>
 
 	</div>
