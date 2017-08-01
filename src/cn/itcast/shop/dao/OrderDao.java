@@ -72,4 +72,10 @@ public class OrderDao {
 		return qr.query(sql, new BeanHandler<Product>(Product.class), orderItem.getItemid());
 	}
 
+	public List<OrderItem> findItemListByPid(String pid) throws SQLException {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "select * from orderitem where pid=?";
+		return qr.query(sql, new BeanListHandler<OrderItem>(OrderItem.class), pid);
+	}
+
 }

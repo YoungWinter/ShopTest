@@ -1,16 +1,29 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <HTML>
 <HEAD>
 <meta http-equiv="Content-Language" content="zh-cn">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${pageContext.request.contextPath}/css/Style1.css"
 	rel="stylesheet" type="text/css" />
-<script language="javascript"
-	src="${pageContext.request.contextPath}/js/public.js"></script>
+<script language="javascript" src="${pageContext.request.contextPath}/js/public.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 			function addCategory(){
 				window.location.href = "${pageContext.request.contextPath}/admin/category/add.jsp";
 			}
+			function delCategory(cid){
+				if(confirm("确定删除该商品种类")){
+					location.href = "${pageContext.request.contextPath}/admin?method=delCategory&cid="+cid;
+				}
+			}
+			
+			$(function(){
+				var info = "${delInfo }";
+				if(info != null && info != ""){
+					alert(info);	
+				}
+			});
 		</script>
 </HEAD>
 <body>
@@ -43,25 +56,23 @@
 							<td width="7%" align="center">编辑</td>
 							<td width="7%" align="center">删除</td>
 						</tr>
-							<tr onmouseover="this.style.backgroundColor = 'white'"
-								onmouseout="this.style.backgroundColor = '#F5FAFE';">
-								<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-									width="18%">1</td>
-								<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-									width="17%">手机数码</td>
-								<td align="center" style="HEIGHT: 22px"><a
-									href="${ pageContext.request.contextPath }/admin/category/edit.jsp">
-										<img
-										src="${pageContext.request.contextPath}/images/i_edit.gif"
-										border="0" style="CURSOR: hand">
-								</a></td>
-
-								<td align="center" style="HEIGHT: 22px"><a
-									href="">
-										<img src="${pageContext.request.contextPath}/images/i_del.gif"
-										width="16" height="16" border="0" style="CURSOR: hand">
-								</a></td>
-							</tr>
+							<c:forEach items="${categoryList }" var="category">
+								<tr onmouseover="this.style.backgroundColor = 'white'" onmouseout="this.style.backgroundColor = '#F5FAFE';">
+									
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="18%">${category.cid }</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="17%">${category.cname }</td>
+									<td align="center" style="HEIGHT: 22px">
+										<a href="${ pageContext.request.contextPath }/admin?method=categoryEditUI&cid=${category.cid }">
+											<img src="${pageContext.request.contextPath}/images/edit_easyicon.png" border="0" style="CURSOR: hand">
+										</a>
+									</td>
+									<td align="center" style="HEIGHT: 22px">
+										<a href="javascript:;" onclick="delCategory('${category.cid }')">
+											<img src="${pageContext.request.contextPath}/images/delete_easyicon.png" width="16" height="16" border="0" style="CURSOR: hand">
+										</a>
+									</td>
+								</tr>
+							</c:forEach>
 					</table>
 				</td>
 			</tr>

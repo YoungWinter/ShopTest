@@ -1,14 +1,12 @@
 package cn.itcast.shop.domain;
 
-import java.util.Date;
-
 public class Product {
 	private String pid;
 	private String pname;
 	private Double market_price;
 	private Double shop_price;
 	private String pimage;
-	private Date pdate;
+	private String pdate;
 	private int is_hot;
 	private String pdesc;
 	private int pflag;
@@ -54,11 +52,11 @@ public class Product {
 		this.pimage = pimage;
 	}
 
-	public Date getPdate() {
+	public String getPdate() {
 		return pdate;
 	}
 
-	public void setPdate(Date pdate) {
+	public void setPdate(String pdate) {
 		this.pdate = pdate;
 	}
 
@@ -96,8 +94,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [pid=" + pid + ", pname=" + pname + ", category="
-				+ category + "]";
+		return "Product [pid=" + pid + ", pname=" + pname + ", category=" + category + "]";
 	}
 
 }

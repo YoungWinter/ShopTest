@@ -55,6 +55,34 @@
   	<url-pattern>/order</url-pattern>
   </servlet-mapping>
   
+  <!-- 后台管理模块 -->
+  <servlet>
+  	<servlet-name>AdminServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.AdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminServlet</servlet-name>
+  	<url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+  <!-- 后台管理模块:保存商品(含文件上传) -->
+  <servlet>
+  	<servlet-name>AdminSaveProductServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.AdminSaveProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminSaveProductServlet</servlet-name>
+  	<url-pattern>/adminSaveProduct</url-pattern>
+  </servlet-mapping>
+  <!-- 后台管理模块:保存商品(含文件上传) -->
+  <servlet>
+  	<servlet-name>AdminUpdateProductServlet</servlet-name>
+  	<servlet-class>cn.itcast.shop.web.servlet.AdminUpdateProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminUpdateProductServlet</servlet-name>
+  	<url-pattern>/adminUpdateProduct</url-pattern>
+  </servlet-mapping>
+  
  
   <!-- 自动登陆过滤器 -->
   <filter>
@@ -84,5 +112,6 @@
   	<!-- <url-pattern>*.action</url-pattern> -->
   	<servlet-name>UserServlet</servlet-name>
   	<servlet-name>OrderServlet</servlet-name>
+  	<servlet-name>AdminServlet</servlet-name>
   </filter-mapping>
 </web-app>

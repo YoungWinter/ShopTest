@@ -3,12 +3,29 @@
 	<HEAD>
 		<meta http-equiv="Content-Language" content="zh-cn">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<LINK href="${pageContext.request.contextPath}/css/Style1.css" type="text/css" rel="stylesheet">
+		<link href="${pageContext.request.contextPath}/css/Style1.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				$.post(
+					"${pageContext.request.contextPath}/admin?method=productForCategory",
+					function(categoryList){
+						var content = "";
+						for(var i = 0; i < categoryList.length; i++){
+							content += "<option value='"+categoryList[i].cid+"'>"+categoryList[i].cname+"</option>";
+						}
+						$("#categorys").html(content);
+					},
+					"json"
+				);
+			});
+		</script>
 	</HEAD>
 	
 	<body>
 		<!--  -->
-		<form id="userAction_save_do" name="Form1" action="${pageContext.request.contextPath}/adminProduct_save.action" method="post" enctype="multipart/form-data">
+		<form id="userAction_save_do" name="Form1" action="${pageContext.request.contextPath}/adminSaveProduct" method="post" enctype="multipart/form-data">
 			&nbsp;
 			<table cellSpacing="1" cellPadding="5" width="100%" align="center" bgColor="#eeeeee" style="border: 1px solid #8ba7e3" border="0">
 				<tr>
@@ -63,10 +80,7 @@
 						所属分类：
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colspan="3">
-						<select name="categorySecond.csid">
-							<option value="">大型电器</option>
-							<option value="">手机数码</option>
-							<option value="">衣帽箱包</option>
+						<select id="categorys" name="cid">
 						</select>
 					</td>
 				</tr>

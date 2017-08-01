@@ -3,7 +3,9 @@ package cn.itcast.shop.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import cn.itcast.shop.dao.OrderDao;
 import cn.itcast.shop.dao.ProductDao;
+import cn.itcast.shop.domain.OrderItem;
 import cn.itcast.shop.domain.PageBean;
 import cn.itcast.shop.domain.Product;
 
@@ -33,8 +35,7 @@ public class ProductService {
 		return hotProductList;
 	}
 
-	public PageBean<Product> findProductByCid(String cid, int currentPage,
-			int currentCount) {
+	public PageBean<Product> findProductByCid(String cid, int currentPage, int currentCount) {
 		ProductDao productDao = new ProductDao();
 		// 封装一个PageBean
 		PageBean<Product> pageBean = new PageBean<Product>();
@@ -87,6 +88,47 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		return productList;
+	}
+
+	public List<Product> findAllProductList() {
+		List<Product> productList = null;
+		ProductDao productDao = new ProductDao();
+		try {
+			productList = productDao.findAllProductList();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return productList;
+	}
+
+	public void saveProduct(Product product) {
+		try {
+			new ProductDao().saveProduct(product);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateProduct(Product product) {
+		try {
+			new ProductDao().updateProduct(product);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void delProductByPid(String pid) {
+		OrderDao orderDao = new OrderDao();
+		ProductDao productDao = new ProductDao();
+		List<OrderItem> itemList = null;
+		try {
+			itemList = orderDao.findItemListByPid(pid);
+			if (itemList.isEmpty()) {
+				productDao.delProductByPid(pid);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

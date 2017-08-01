@@ -103,7 +103,7 @@
 					<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
 						<a href="javascript:;" onclick="clearCart()" id="clear" class="clear">清空购物车</a>
 						<a href="${pageContext.request.contextPath }/order?method=saveOrder&cartPage=cartPage">
-							<input type="button" width="100" value="提交订单" name="submit" border="0" style="background: url('./images/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+							<input type="button" width="100" value="提交订单" name="submit" style="background: url('./images/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 							height:35px;width:100px;color:white;">
 						</a>
 					</div>
