@@ -21,8 +21,8 @@ public class EncodingFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
 
 		// 类型转换
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -39,13 +39,15 @@ public class EncodingFilter implements Filter {
 					new InvocationHandler() {
 
 						@Override
-						public Object invoke(Object proxy, Method method, Object[] args)
-								throws Throwable {
+						public Object invoke(Object proxy, Method method,
+								Object[] args) throws Throwable {
 							String name = method.getName();
 							if ("getParameter".equals(name)) {
 								// 获得参数(含中文乱码)
-								String invoke = (String) method.invoke(httpRequest, args);
-								invoke = new String(invoke.getBytes("iso8859-1"), "UTF-8");
+								String invoke = (String) method
+										.invoke(httpRequest, args);
+								invoke = new String(
+										invoke.getBytes("iso8859-1"), "UTF-8");
 								return invoke;
 							}
 							return method.invoke(httpRequest, args);
@@ -53,8 +55,9 @@ public class EncodingFilter implements Filter {
 					});
 
 		} else if ("POST".equals(method)) {
-			httpRequest.setCharacterEncoding("UTF-8");
 			proxyHttpRequest = httpRequest;
+			proxyHttpRequest.setCharacterEncoding("UTF-8");
+
 		} else {
 			proxyHttpRequest = httpRequest;
 		}

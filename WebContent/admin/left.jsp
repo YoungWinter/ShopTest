@@ -30,7 +30,7 @@
 		d.add('0104','01','商品管理');
 		d.add('010401','0104','商品管理','${pageContext.request.contextPath}/admin?method=productList','','mainFrame');
 		d.add('0105','01','订单管理');
-		d.add('010501','0105','订单管理','${pageContext.request.contextPath}/admin/order/list.jsp','','mainFrame');
+		d.add('010501','0105','订单管理','${pageContext.request.contextPath}/admin?method=orderList','','mainFrame');
 		document.write(d);
 		
 	</script>

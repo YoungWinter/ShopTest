@@ -25,8 +25,8 @@ public class OrderServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	// 订单展示
-	public String orderList(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String orderList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		// 获取当前用户
 		HttpSession session = request.getSession();
@@ -44,12 +44,15 @@ public class OrderServlet extends BaseServlet {
 	}
 
 	// 订单处理
-	public String dealOrder(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String dealOrder(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 		// 获取表单数据
 		String oid = request.getParameter("oid");
 		String address = request.getParameter("address");
+		address = new String(address.getBytes("ISO8859-1"), "UTF-8");
 		String name = request.getParameter("name");
+		name = new String(name.getBytes("ISO8859-1"), "UTF-8");
 		String telephone = request.getParameter("telephone");
 
 		// 根据oid查询订单对象并封装数据
@@ -65,14 +68,16 @@ public class OrderServlet extends BaseServlet {
 		orderService.updateOrder(order);
 
 		// 页面跳转
-		response.sendRedirect(request.getContextPath() + "/order?method=orderList");
+		response.setContentType("text/html;charset=UTF-8");
+		response.sendRedirect(
+				request.getContextPath() + "/order?method=orderList");
 
 		return null;
 	}
 
 	// 保存订单
-	public String saveOrder(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String saveOrder(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		// 判断用户是否登录
 		HttpSession session = request.getSession();
@@ -112,15 +117,15 @@ public class OrderServlet extends BaseServlet {
 
 		// 将Order对象存到Session中
 		session.setAttribute("order", order);
-
+		response.setContentType("text/html;charset=UTF-8");
 		response.sendRedirect(request.getContextPath() + "/order_info.jsp");
 
 		return null;
 	}
 
 	// 保存订单
-	public String payOrder(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String payOrder(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		// 获取oid
 		String oid = request.getParameter("oid");
@@ -132,7 +137,7 @@ public class OrderServlet extends BaseServlet {
 		// 将Order对象存到Session中
 		HttpSession session = request.getSession();
 		session.setAttribute("order", order);
-
+		response.setContentType("text/html;charset=UTF-8");
 		response.sendRedirect(request.getContextPath() + "/order_info.jsp");
 
 		return null;

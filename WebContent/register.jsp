@@ -83,7 +83,7 @@
 					"type" : "POST",
 					"dataType" : "json",
 					"success" : function(data) {
-						isTrue = data.isExist;
+						isTrue=data.isExist;
 					}
 				});
 				return isTrue;

@@ -29,8 +29,8 @@ public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	// 用户退出
-	public String logout(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String logout(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
@@ -54,8 +54,8 @@ public class UserServlet extends BaseServlet {
 	}
 
 	// 用户登录
-	public String login(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String login(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		String result = "";
 		Map<String, String[]> properties = request.getParameterMap();
@@ -75,10 +75,12 @@ public class UserServlet extends BaseServlet {
 				// 把用户的用户名和密码存入Cookie中
 				String username = loginUser.getUsername();
 				String encode_username = URLEncoder.encode(username, "UTF-8");
-				Cookie cookie_username = new Cookie("cookie_username", encode_username);
+				Cookie cookie_username = new Cookie("cookie_username",
+						encode_username);
 				cookie_username.setMaxAge(60 * 60);
 
-				Cookie cookie_psaaword = new Cookie("cookie_psaaword", loginUser.getPassword());
+				Cookie cookie_psaaword = new Cookie("cookie_psaaword",
+						loginUser.getPassword());
 				cookie_psaaword.setMaxAge(60 * 60);
 
 				response.addCookie(cookie_username);
@@ -111,8 +113,8 @@ public class UserServlet extends BaseServlet {
 	}
 
 	// 用户注册
-	public String register(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String register(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// 获取表单参数
 		Map<String, String[]> properties = request.getParameterMap();
 		// 封装User对象
@@ -122,10 +124,12 @@ public class UserServlet extends BaseServlet {
 			ConvertUtils.register(new Converter() {
 
 				@Override
-				public Object convert(@SuppressWarnings("rawtypes") Class calzz, Object value) {
+				public Object convert(@SuppressWarnings("rawtypes") Class calzz,
+						Object value) {
 					Date date = null;
 					// 将String转换成Date
-					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat format = new SimpleDateFormat(
+							"yyyy-MM-dd");
 					try {
 						date = format.parse(value.toString());
 					} catch (ParseException e) {
@@ -158,8 +162,8 @@ public class UserServlet extends BaseServlet {
 			String emailMsg = "恭喜您注册成功，请点击下面的连接进行激活账户"
 					+ "<a href='http://localhost:8080/ItcastShop/user?method=active&activeCode="
 					+ activeCode + "'>"
-					+ "http://localhost:8080/ItcastShop/user?method=active&activeCode=" + activeCode
-					+ "</a>";
+					+ "http://localhost:8080/ItcastShop/user?method=active&activeCode="
+					+ activeCode + "</a>";
 			try {
 				MailUtils.sendMail(user.getEmail(), "注册激活", emailMsg);
 			} catch (MessagingException e) {
@@ -167,7 +171,8 @@ public class UserServlet extends BaseServlet {
 			}
 
 			// 跳转到注册成功页面
-			response.sendRedirect(request.getContextPath() + "/registerSuccess.jsp");
+			response.sendRedirect(
+					request.getContextPath() + "/registerSuccess.jsp");
 			return null;
 		}
 
@@ -175,8 +180,8 @@ public class UserServlet extends BaseServlet {
 	}
 
 	// 用户激活
-	public String active(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String active(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// 获取邮件中的激活码
 		String activeCode = request.getParameter("activeCode");
 
@@ -190,8 +195,8 @@ public class UserServlet extends BaseServlet {
 	}
 
 	// 校验用户名
-	public String checkUsername(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String checkUsername(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// 获取要校验的用户名
 		String username = request.getParameter("username");
 
@@ -205,11 +210,13 @@ public class UserServlet extends BaseServlet {
 	}
 
 	// 校验图片验证码
-	public String checkImgValidate(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String checkImgValidate(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 		boolean isTrue = false;
 		String checkCode = request.getParameter("checkCode");
-		String attribute = (String) request.getSession().getAttribute("checkcode_session");
+		String attribute = (String) request.getSession()
+				.getAttribute("checkcode_session");
 		if (checkCode != null && checkCode.equals(attribute)) {
 			isTrue = true;
 		}

@@ -2,6 +2,7 @@ package cn.itcast.shop.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import cn.itcast.shop.dao.OrderDao;
 import cn.itcast.shop.domain.Order;
@@ -67,7 +68,8 @@ public class OrderService {
 				orderItems = orderDao.findItemListByOid(order);
 				// 补全所有orderItems中的product对象
 				for (OrderItem orderItem : orderItems) {
-					orderItem.setProduct(orderDao.findProductByItemid(orderItem));
+					orderItem.setProduct(
+							orderDao.findProductByItemid(orderItem));
 				}
 				order.setOrderItems(orderItems);
 			}
@@ -93,6 +95,28 @@ public class OrderService {
 		}
 		order.setOrderItems(orderItems);
 		return order;
+	}
+
+	public List<Order> findAllOrderList() {
+		List<Order> orderList = null;
+		OrderDao orderDao = new OrderDao();
+		try {
+			orderList = orderDao.findAllOrderList();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return orderList;
+	}
+
+	public List<Map<String, Object>> findOrderInfoByOid(String oid) {
+		List<Map<String, Object>> info = null;
+		OrderDao orderDao = new OrderDao();
+		try {
+			info = orderDao.findOrderInfoByOid(oid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return info;
 	}
 
 }
