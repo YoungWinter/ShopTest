@@ -4,60 +4,46 @@ import java.sql.SQLException;
 import java.util.List;
 
 import cn.itcast.shop.dao.OrderDao;
-import cn.itcast.shop.dao.ProductDaoImpl;
+import cn.itcast.shop.dao.impl.ProductDaoImpl;
 import cn.itcast.shop.domain.OrderItem;
 import cn.itcast.shop.domain.PageBean;
 import cn.itcast.shop.domain.Product;
 
-public class ProductServiceImpl {
+public class ProductServiceImpl implements ProductService {
 
 	// 获取最热商品列表
+	@Override
 	public List<Product> findHotProductList() {
 		List<Product> hotProductList = null;
 		ProductDaoImpl productDao = new ProductDaoImpl();
-		try {
-			hotProductList = productDao.findHotProductList();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		hotProductList = productDao.findHotProductList();
 		return hotProductList;
 	}
 
 	// 获取最新商品列表
+	@Override
 	public List<Product> findNewProductList() {
 		List<Product> hotProductList = null;
 		ProductDaoImpl productDao = new ProductDaoImpl();
-		try {
-			hotProductList = productDao.findNewProductList();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		hotProductList = productDao.findNewProductList();
 		return hotProductList;
 	}
 
-	public PageBean<Product> findProductByCid(String cid, int currentPage, int currentCount) {
+	@Override
+	public PageBean<Product> findProductByCid(Integer cid, int currentPage, int currentCount) {
 		ProductDaoImpl productDao = new ProductDaoImpl();
 		// 封装一个PageBean
 		PageBean<Product> pageBean = new PageBean<Product>();
 
 		// 总条数
 		int totalCount = 0;
-		try {
-			totalCount = productDao.getCount(cid);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		totalCount = productDao.getCount(cid);
 		// 总页数
 		int totalPage = (int) Math.ceil(1.0 * totalCount / currentCount);
 		// 符合条件的商品列表
 		int index = (currentPage - 1) * currentCount;
 		List<Product> list = null;
-		try {
-			list = productDao.findProductByPage(cid, index, currentCount);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		list = productDao.findProductByPage(cid, index, currentCount);
 
 		pageBean.setCurrentPage(currentPage);
 		pageBean.setCurrentCount(currentCount);
@@ -68,56 +54,42 @@ public class ProductServiceImpl {
 		return pageBean;
 	}
 
-	public Product findProductByPid(String pid) {
+	@Override
+	public Product findProductByPid(Integer pid) {
 		Product product = null;
 		ProductDaoImpl productDao = new ProductDaoImpl();
-		try {
-			product = productDao.findProductByPid(pid);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		product = productDao.findProductByPid(pid);
 		return product;
 	}
 
+	@Override
 	public List<Product> findProductListByWord(String keyWord) {
 		List<Product> productList = null;
 		ProductDaoImpl productDao = new ProductDaoImpl();
-		try {
-			productList = productDao.findProductListByWord(keyWord);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		productList = productDao.findProductListByWord(keyWord);
 		return productList;
 	}
 
+	@Override
 	public List<Product> findAllProductList() {
 		List<Product> productList = null;
 		ProductDaoImpl productDao = new ProductDaoImpl();
-		try {
-			productList = productDao.findAllProductList();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		productList = productDao.findAllProductList();
 		return productList;
 	}
 
+	@Override
 	public void saveProduct(Product product) {
-		try {
-			new ProductDaoImpl().saveProduct(product);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		new ProductDaoImpl().saveProduct(product);
 	}
 
+	@Override
 	public void updateProduct(Product product) {
-		try {
-			new ProductDaoImpl().updateProduct(product);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		new ProductDaoImpl().updateProduct(product);
 	}
 
-	public void delProductByPid(String pid) {
+	@Override
+	public void delProductByPid(Integer pid) {
 		OrderDao orderDao = new OrderDao();
 		ProductDaoImpl productDao = new ProductDaoImpl();
 		List<OrderItem> itemList = null;

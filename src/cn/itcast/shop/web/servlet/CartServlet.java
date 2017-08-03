@@ -18,8 +18,8 @@ public class CartServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	// 清空购物车
-	public String clearCart(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String clearCart(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.removeAttribute("cart");
 		response.sendRedirect(request.getContextPath() + "/cart.jsp");
@@ -27,14 +27,14 @@ public class CartServlet extends BaseServlet {
 	}
 
 	// 删除购物车中的商品delCartItemFormCart
-	public String delCartItemFormCart(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String delCartItemFormCart(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		String pid = request.getParameter("pid");
 		HttpSession session = request.getSession();
 		Cart cart = (Cart) session.getAttribute("cart");
 		if (cart != null) {
-			Map<String, CartItem> cartItemMap = cart.getCartItemMap();
+			Map<Integer, CartItem> cartItemMap = cart.getCartItemMap();
 			cartItemMap.remove(pid);
 			cart.setCartItemMap(cartItemMap);
 		}
@@ -45,11 +45,11 @@ public class CartServlet extends BaseServlet {
 	}
 
 	// 将商品添加到购物车
-	public String addProductToCart(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String addProductToCart(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// 获得pid和buyNum
-		String pid = request.getParameter("pid");
+		Integer pid = Integer.parseInt(request.getParameter("pid"));
 		String buyNumStr = request.getParameter("buyNum");
 		int buyNum = 0;
 		if (buyNumStr != null && !"".equals(buyNumStr)) {
@@ -71,11 +71,10 @@ public class CartServlet extends BaseServlet {
 		}
 
 		// 从Cart对象中取出CartItem集合
-		Map<String, CartItem> cartItemMap = cart.getCartItemMap();
+		Map<Integer, CartItem> cartItemMap = cart.getCartItemMap();
 		if (cartItemMap.containsKey(pid)) {
 			// 如果存在该cartItem，则重新设置该cartItem的buyNum
-			cartItemMap.get(pid)
-					.setBuyNum(cartItemMap.get(pid).getBuyNum() + buyNum);
+			cartItemMap.get(pid).setBuyNum(cartItemMap.get(pid).getBuyNum() + buyNum);
 		} else {
 			// 如果不存在该cartItem，则添加该cartItem
 			cartItemMap.put(pid, cartItem);

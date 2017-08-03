@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-	<!-- 配置AdminServiceImpl的清单 -->
-	<bean id="productService" class="cn.itcast.shop.service.impl.ProductServiceImplByHN"></bean>
-	<!-- <bean id="adminService" class="com.itheima.service.impl.AdminServiceImpl2"></bean> -->
 
-	<bean id="productDao" class="cn.itcast.shop.dao.ProductDaoImplByHN"></bean>
-	<!-- <bean id="adminDao" class="com.itheima.dao.impl.AdminDaoImplOracle"></bean> -->
+	<!-- 配置CategoryService的清单 -->
+	<bean id="categoryService" class="cn.itcast.shop.service.impl.CategoryServiceImpl"></bean>
+	<bean id="categoryDao" class="cn.itcast.shop.dao.impl.CategoryDaoImpl"></bean>
+
+	<!-- 配置ProductService的清单 -->
+	<bean id="productService" class="cn.itcast.shop.service.impl.ProductServiceImpl"></bean>
+	<bean id="productDao" class="cn.itcast.shop.dao.impl.ProductDaoImpl"></bean>
 
 </beans>

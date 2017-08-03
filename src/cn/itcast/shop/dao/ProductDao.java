@@ -12,17 +12,17 @@ public interface ProductDao {
 	public List<Product> findNewProductList();
 
 	// 获取总条数
-	public int getCount(String cid);
+	public int getCount(Integer cid);
 
 	// 分页查询
-	public List<Product> findProductByPage(String cid, int index, int currentCount);
+	public List<Product> findProductByPage(Integer cid, int index, int currentCount);
 
 	// 通过pid查询商品
-	public Product findProductByPid(String pid);
+	public Product findProductByPid(Integer pid);
 
 	public List<Product> findProductListByWord(String keyWord);
 
-	public List<Product> findProductByCid(String cid);
+	public List<Product> findProductByCid(Integer cid);
 
 	public List<Product> findAllProductList();
 
@@ -30,6 +30,6 @@ public interface ProductDao {
 
 	public void updateProduct(Product product);
 
-	public void delProductByPid(String pid);
+	public void delProductByPid(Integer pid);
 
 }

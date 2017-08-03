@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -96,7 +95,7 @@ public class AdminSaveProductServlet extends HttpServlet {
 			}
 
 			// 补全数据
-			product.setPid(UUID.randomUUID().toString());
+
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			product.setPdate(format.format(new Date()));
 			product.setPflag(0);

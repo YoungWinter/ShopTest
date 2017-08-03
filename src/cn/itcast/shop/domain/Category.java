@@ -1,15 +1,27 @@
 package cn.itcast.shop.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Category {
 
-	private String cid;
+	private Integer cid;
 	private String cname;
+	private Set<Product> productList = new HashSet<Product>();
 
-	public String getCid() {
+	public Set<Product> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(Set<Product> productList) {
+		this.productList = productList;
+	}
+
+	public Integer getCid() {
 		return cid;
 	}
 
-	public void setCid(String cid) {
+	public void setCid(Integer cid) {
 		this.cid = cid;
 	}
 

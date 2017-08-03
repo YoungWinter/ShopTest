@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+   <!-- 配置表与实体对象的关系 -->
+   <!-- package属性:填写一个包名.在元素内部凡是需要书写完整类名的属性,可以直接写简答类名了. -->
+<hibernate-mapping package="cn.itcast.shop.domain" >
+	<class name="Category" table="category" >
+		<id name="cid"  >
+			<generator class="native"></generator>
+		</id>
+		<property name="cname"></property>
+		<set name="productList" inverse="true">
+			<key column="cid"></key>
+			<one-to-many class="Product"/>
+		</set>
+	</class>
+</hibernate-mapping>

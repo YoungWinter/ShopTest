@@ -12,9 +12,9 @@ public interface ProductService {
 	// 获取最新商品列表
 	public List<Product> findNewProductList();
 
-	public PageBean<Product> findProductByCid(String cid, int currentPage, int currentCount);
+	public PageBean<Product> findProductByCid(Integer cid, int currentPage, int currentCount);
 
-	public Product findProductByPid(String pid);
+	public Product findProductByPid(Integer pid);
 
 	public List<Product> findProductListByWord(String keyWord);
 
@@ -24,6 +24,6 @@ public interface ProductService {
 
 	public void updateProduct(Product product);
 
-	public void delProductByPid(String pid);
+	public void delProductByPid(Integer pid);
 
 }

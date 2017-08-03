@@ -16,8 +16,8 @@ import com.google.gson.Gson;
 import cn.itcast.shop.domain.Category;
 import cn.itcast.shop.domain.PageBean;
 import cn.itcast.shop.domain.Product;
-import cn.itcast.shop.service.CategoryService;
 import cn.itcast.shop.service.ProductServiceImpl;
+import cn.itcast.shop.service.impl.CategoryServiceImpl;
 import cn.itcast.shop.utils.JedisPoolUtils;
 import redis.clients.jedis.Jedis;
 
@@ -46,7 +46,7 @@ public class ProductServlet extends BaseServlet {
 	public String categoryList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		CategoryService categoryService = new CategoryService();
+		CategoryServiceImpl categoryService = new CategoryServiceImpl();
 		List<Category> categoryList = null;
 		String json = null;
 		Gson gson = new Gson();
@@ -68,7 +68,7 @@ public class ProductServlet extends BaseServlet {
 	public String index(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 查询分类
-		CategoryService categoryService = new CategoryService();
+		CategoryServiceImpl categoryService = new CategoryServiceImpl();
 		List<Category> categoryList = categoryService.findAllCategory();
 		request.setAttribute("categoryList", categoryList);
 
@@ -89,7 +89,7 @@ public class ProductServlet extends BaseServlet {
 	public String productInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 获取商品的pid
-		String pid = request.getParameter("pid");
+		Integer pid = Integer.parseInt(request.getParameter("pid"));
 		String currentPage = request.getParameter("currentPage");
 
 		// 根据pid查询商品对象
@@ -97,7 +97,7 @@ public class ProductServlet extends BaseServlet {
 		Product product = productService.findProductByPid(pid);
 
 		// 创建或获取Cookie对象，然后向对象中设置当前商品的pid
-		String pids = pid;
+		String pids = pid.toString();
 		Cookie[] getCookies = request.getCookies();
 		if (getCookies != null) {
 			for (Cookie cookie : getCookies) {
@@ -108,7 +108,7 @@ public class ProductServlet extends BaseServlet {
 					if (pidsList.contains(pid)) {
 						pidsList.remove(pid);
 					}
-					pidsList.addFirst(pid);
+					pidsList.addFirst(pid.toString());
 					pids = "";
 					for (int i = 0; i < pidsList.size() && i < 7; i++) {
 
@@ -134,7 +134,7 @@ public class ProductServlet extends BaseServlet {
 	public String productListByCategory(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 获取商品种类的ID
-		String cid = request.getParameter("cid");
+		Integer cid = Integer.parseInt(request.getParameter("cid"));
 		String currentPageStr = request.getParameter("currentPage");
 
 		if (currentPageStr == null || "".equals(currentPageStr)) {
@@ -156,7 +156,7 @@ public class ProductServlet extends BaseServlet {
 				if ("pids".equals(cookie.getName())) {
 					String[] pids = cookie.getValue().split(":");
 					for (String pid : pids) {
-						Product product = productService.findProductByPid(pid);
+						Product product = productService.findProductByPid(Integer.parseInt(pid));
 						historyList.add(product);
 					}
 				}

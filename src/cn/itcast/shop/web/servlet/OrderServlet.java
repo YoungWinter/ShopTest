@@ -25,8 +25,8 @@ public class OrderServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
 	// 订单展示
-	public String orderList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String orderList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// 获取当前用户
 		HttpSession session = request.getSession();
@@ -44,8 +44,8 @@ public class OrderServlet extends BaseServlet {
 	}
 
 	// 订单处理
-	public String dealOrder(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String dealOrder(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// 获取表单数据
 		String oid = request.getParameter("oid");
@@ -69,15 +69,14 @@ public class OrderServlet extends BaseServlet {
 
 		// 页面跳转
 		response.setContentType("text/html;charset=UTF-8");
-		response.sendRedirect(
-				request.getContextPath() + "/order?method=orderList");
+		response.sendRedirect(request.getContextPath() + "/order?method=orderList");
 
 		return null;
 	}
 
 	// 保存订单
-	public String saveOrder(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String saveOrder(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// 判断用户是否登录
 		HttpSession session = request.getSession();
@@ -100,8 +99,8 @@ public class OrderServlet extends BaseServlet {
 		order.setTotal(cart.getTotal());
 		// 封装OrderItem,然后添加到Order对象中
 		List<OrderItem> orderItems = order.getOrderItems();
-		Map<String, CartItem> cartItemMap = cart.getCartItemMap();
-		for (Entry<String, CartItem> entry : cartItemMap.entrySet()) {
+		Map<Integer, CartItem> cartItemMap = cart.getCartItemMap();
+		for (Entry<Integer, CartItem> entry : cartItemMap.entrySet()) {
 			CartItem cartItem = entry.getValue();
 			OrderItem orderItem = new OrderItem();
 			orderItem.setItemid(UUID.randomUUID().toString());
@@ -124,8 +123,8 @@ public class OrderServlet extends BaseServlet {
 	}
 
 	// 保存订单
-	public String payOrder(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String payOrder(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		// 获取oid
 		String oid = request.getParameter("oid");

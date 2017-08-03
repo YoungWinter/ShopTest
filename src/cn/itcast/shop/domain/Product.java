@@ -1,7 +1,7 @@
 package cn.itcast.shop.domain;
 
 public class Product {
-	private String pid;
+	private Integer pid;
 	private String pname;
 	private Double market_price;
 	private Double shop_price;
@@ -12,11 +12,11 @@ public class Product {
 	private int pflag;
 	private Category category;
 
-	public String getPid() {
+	public Integer getPid() {
 		return pid;
 	}
 
-	public void setPid(String pid) {
+	public void setPid(Integer pid) {
 		this.pid = pid;
 	}
 
