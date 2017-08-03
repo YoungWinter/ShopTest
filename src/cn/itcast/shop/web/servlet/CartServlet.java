@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import cn.itcast.shop.domain.Cart;
 import cn.itcast.shop.domain.CartItem;
 import cn.itcast.shop.domain.Product;
-import cn.itcast.shop.service.ProductService;
+import cn.itcast.shop.service.ProductServiceImpl;
 
 public class CartServlet extends BaseServlet {
 
@@ -58,7 +58,7 @@ public class CartServlet extends BaseServlet {
 
 		// 封装CartItem对象
 		CartItem cartItem = new CartItem();
-		ProductService productService = new ProductService();
+		ProductServiceImpl productService = new ProductServiceImpl();
 		Product product = productService.findProductByPid(pid);
 		cartItem.setProduct(product);
 		cartItem.setBuyNum(buyNum);

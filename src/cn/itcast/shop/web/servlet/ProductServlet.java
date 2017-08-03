@@ -17,7 +17,7 @@ import cn.itcast.shop.domain.Category;
 import cn.itcast.shop.domain.PageBean;
 import cn.itcast.shop.domain.Product;
 import cn.itcast.shop.service.CategoryService;
-import cn.itcast.shop.service.ProductService;
+import cn.itcast.shop.service.ProductServiceImpl;
 import cn.itcast.shop.utils.JedisPoolUtils;
 import redis.clients.jedis.Jedis;
 
@@ -32,7 +32,7 @@ public class ProductServlet extends BaseServlet {
 		String keyWord = request.getParameter("word");
 		// 根据关键字查询符合条件的商品集合
 		List<Product> productList = null;
-		ProductService productService = new ProductService();
+		ProductServiceImpl productService = new ProductServiceImpl();
 		productList = productService.findProductListByWord(keyWord);
 
 		Gson gson = new Gson();
@@ -72,7 +72,7 @@ public class ProductServlet extends BaseServlet {
 		List<Category> categoryList = categoryService.findAllCategory();
 		request.setAttribute("categoryList", categoryList);
 
-		ProductService productService = new ProductService();
+		ProductServiceImpl productService = new ProductServiceImpl();
 		// 最热商品
 		List<Product> hotProductList = productService.findHotProductList();
 		// 最新商品
@@ -93,7 +93,7 @@ public class ProductServlet extends BaseServlet {
 		String currentPage = request.getParameter("currentPage");
 
 		// 根据pid查询商品对象
-		ProductService productService = new ProductService();
+		ProductServiceImpl productService = new ProductServiceImpl();
 		Product product = productService.findProductByPid(pid);
 
 		// 创建或获取Cookie对象，然后向对象中设置当前商品的pid
@@ -144,7 +144,7 @@ public class ProductServlet extends BaseServlet {
 		int currentCount = 12;
 
 		// 根据商品种类ID查询商品列表
-		ProductService productService = new ProductService();
+		ProductServiceImpl productService = new ProductServiceImpl();
 		PageBean<Product> pageBean = productService.findProductByCid(cid, currentPage,
 				currentCount);
 

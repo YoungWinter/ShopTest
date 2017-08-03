@@ -26,7 +26,7 @@ import org.apache.commons.io.IOUtils;
 
 import cn.itcast.shop.domain.Category;
 import cn.itcast.shop.domain.Product;
-import cn.itcast.shop.service.ProductService;
+import cn.itcast.shop.service.ProductServiceImpl;
 
 public class AdminUpdateProductServlet extends HttpServlet {
 
@@ -94,7 +94,7 @@ public class AdminUpdateProductServlet extends HttpServlet {
 			product.setCategory(category);
 
 			// 保存数据
-			ProductService productService = new ProductService();
+			ProductServiceImpl productService = new ProductServiceImpl();
 			productService.updateProduct(product);
 
 			// 页面跳转

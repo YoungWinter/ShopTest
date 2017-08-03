@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import cn.itcast.shop.dao.CategoryDao;
-import cn.itcast.shop.dao.ProductDao;
+import cn.itcast.shop.dao.ProductDaoImpl;
 import cn.itcast.shop.domain.Category;
 import cn.itcast.shop.domain.Product;
 
@@ -50,7 +50,7 @@ public class CategoryService {
 	public boolean deleteCategoryByCid(String cid) {
 		boolean isDel = false;
 		CategoryDao categoryDao = new CategoryDao();
-		ProductDao productDao = new ProductDao();
+		ProductDaoImpl productDao = new ProductDaoImpl();
 		List<Product> productList = null;
 		try {
 			productList = productDao.findProductByCid(cid);

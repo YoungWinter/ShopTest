@@ -1,134 +1,29 @@
 package cn.itcast.shop.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import cn.itcast.shop.dao.OrderDao;
-import cn.itcast.shop.dao.ProductDao;
-import cn.itcast.shop.domain.OrderItem;
 import cn.itcast.shop.domain.PageBean;
 import cn.itcast.shop.domain.Product;
 
-public class ProductService {
-
+public interface ProductService {
 	// 获取最热商品列表
-	public List<Product> findHotProductList() {
-		List<Product> hotProductList = null;
-		ProductDao productDao = new ProductDao();
-		try {
-			hotProductList = productDao.findHotProductList();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return hotProductList;
-	}
+	public List<Product> findHotProductList();
 
 	// 获取最新商品列表
-	public List<Product> findNewProductList() {
-		List<Product> hotProductList = null;
-		ProductDao productDao = new ProductDao();
-		try {
-			hotProductList = productDao.findNewProductList();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return hotProductList;
-	}
+	public List<Product> findNewProductList();
 
-	public PageBean<Product> findProductByCid(String cid, int currentPage, int currentCount) {
-		ProductDao productDao = new ProductDao();
-		// 封装一个PageBean
-		PageBean<Product> pageBean = new PageBean<Product>();
+	public PageBean<Product> findProductByCid(String cid, int currentPage, int currentCount);
 
-		// 总条数
-		int totalCount = 0;
-		try {
-			totalCount = productDao.getCount(cid);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// 总页数
-		int totalPage = (int) Math.ceil(1.0 * totalCount / currentCount);
-		// 符合条件的商品列表
-		int index = (currentPage - 1) * currentCount;
-		List<Product> list = null;
-		try {
-			list = productDao.findProductByPage(cid, index, currentCount);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public Product findProductByPid(String pid);
 
-		pageBean.setCurrentPage(currentPage);
-		pageBean.setCurrentCount(currentCount);
-		pageBean.setTotalPage(totalPage);
-		pageBean.setTotalCount(totalCount);
-		pageBean.setList(list);
+	public List<Product> findProductListByWord(String keyWord);
 
-		return pageBean;
-	}
+	public List<Product> findAllProductList();
 
-	public Product findProductByPid(String pid) {
-		Product product = null;
-		ProductDao productDao = new ProductDao();
-		try {
-			product = productDao.findProductByPid(pid);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return product;
-	}
+	public void saveProduct(Product product);
 
-	public List<Product> findProductListByWord(String keyWord) {
-		List<Product> productList = null;
-		ProductDao productDao = new ProductDao();
-		try {
-			productList = productDao.findProductListByWord(keyWord);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return productList;
-	}
+	public void updateProduct(Product product);
 
-	public List<Product> findAllProductList() {
-		List<Product> productList = null;
-		ProductDao productDao = new ProductDao();
-		try {
-			productList = productDao.findAllProductList();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return productList;
-	}
-
-	public void saveProduct(Product product) {
-		try {
-			new ProductDao().saveProduct(product);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updateProduct(Product product) {
-		try {
-			new ProductDao().updateProduct(product);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void delProductByPid(String pid) {
-		OrderDao orderDao = new OrderDao();
-		ProductDao productDao = new ProductDao();
-		List<OrderItem> itemList = null;
-		try {
-			itemList = orderDao.findItemListByPid(pid);
-			if (itemList.isEmpty()) {
-				productDao.delProductByPid(pid);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	public void delProductByPid(String pid);
 
 }

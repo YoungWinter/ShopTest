@@ -27,7 +27,7 @@ import org.apache.commons.io.IOUtils;
 
 import cn.itcast.shop.domain.Category;
 import cn.itcast.shop.domain.Product;
-import cn.itcast.shop.service.ProductService;
+import cn.itcast.shop.service.ProductServiceImpl;
 
 /**
  * 如果表单中有文件上传,可以使用该类
@@ -103,7 +103,7 @@ public class AdminSaveProductServlet extends HttpServlet {
 			product.setCategory(category);
 
 			// 保存数据
-			ProductService productService = new ProductService();
+			ProductServiceImpl productService = new ProductServiceImpl();
 			productService.saveProduct(product);
 
 			// 页面跳转

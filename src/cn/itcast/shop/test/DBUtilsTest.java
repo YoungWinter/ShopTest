@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import cn.itcast.shop.dao.ProductDao;
+import cn.itcast.shop.dao.ProductDaoImpl;
 import cn.itcast.shop.domain.Product;
 
 public class DBUtilsTest {
 
 	@Test
 	public void test() {
-		ProductDao productDao = new ProductDao();
+		ProductDaoImpl productDao = new ProductDaoImpl();
 		List<Product> productList = null;
 		try {
 			productList = productDao.findHotProductList();
